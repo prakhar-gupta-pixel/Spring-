@@ -62,7 +62,9 @@ public class StudentController {
 
 //         return ResponseEntity.ok(StudentResponse);
 
-            return ResponseEntity.ok(StudentResponse);
+            return ResponseEntity.
+                    status(HttpStatus.OK).
+                    body(StudentResponse);
 
 
     }
