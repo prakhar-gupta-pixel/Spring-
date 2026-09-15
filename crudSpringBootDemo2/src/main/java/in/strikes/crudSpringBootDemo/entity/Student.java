@@ -2,38 +2,18 @@ package in.strikes.crudSpringBootDemo.entity;
 
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import java.time.LocalDateTime;
 
 @Entity
 public class Student {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    private LocalDateTime craetedAt;
-    private LocalDateTime updatedAt;
 
-    public LocalDateTime getCraetedAt() {
-        return craetedAt;
-    }
 
-    public void setCraetedAt(LocalDateTime craetedAt) {
-        this.craetedAt = craetedAt;
-    }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     private Boolean deleted;
 

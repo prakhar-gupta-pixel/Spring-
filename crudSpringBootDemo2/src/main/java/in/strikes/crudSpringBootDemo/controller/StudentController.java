@@ -2,12 +2,13 @@ package in.strikes.crudSpringBootDemo.controller;
 
 import in.strikes.crudSpringBootDemo.Service.StudentService;
 import in.strikes.crudSpringBootDemo.entity.Student;
-import in.strikes.crudSpringBootDemo.requestdto.Createrequestdto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
 @RestController
@@ -25,13 +26,13 @@ public class StudentController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Createrequestdto> createStudent(@RequestBody Student createrequestdto) {
+    public ResponseEntity<Student> createStudent(@RequestBody Student studentreq) {
 
 
 
 
 //        System.out.println("entering controller");
-        craeteresposnsedto createdStuden = studentService.createStudent(createrequestdto);
+        Student createdStudent = studentService.createStudent(studentreq);
 
 
 //        System.out.println("exiting controller");

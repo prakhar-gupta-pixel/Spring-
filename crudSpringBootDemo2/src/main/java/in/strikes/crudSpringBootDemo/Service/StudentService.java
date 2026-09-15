@@ -2,8 +2,8 @@ package in.strikes.crudSpringBootDemo.Service;
 
 import in.strikes.crudSpringBootDemo.entity.Student;
 import in.strikes.crudSpringBootDemo.repository.StudentRepository;
-import in.strikes.crudSpringBootDemo.requestdto.Createrequestdto;
-import in.strikes.crudSpringBootDemo.responsedto.Createresponsedto;
+import jakarta.persistence.Id;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,19 +20,16 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Student createStudent( Createrequestdto requestdto) {
+    public Student createStudent( Student studentReq) {
 
 //        System.out.println("entering serivce");
 
-        Student student =mapToEntity(requestdto);
+        studentReq.setDeleted(false);
+        Student StudentResp = studentRepository.save(studentReq);
 
+        System.out.println("exiting serivce");
 
-//        studentReq.setDeleted(false);
-        Student StudentResp = studentRepository.save(student);
-
-
-
-           return mapToDto(StudentResp);
+           return StudentResp;
     }
 
 
@@ -113,38 +110,4 @@ public class StudentService {
 
         return true;
     }
-
-
-
-    private Student mapToEntity(Createrequestdto requestdto) {
-
-        Student StudentResp = new Student();
-
-        StudentResp.setName(requestdto.getName());
-        StudentResp.setAge(requestdto.getAge());
-        StudentResp.setSubject(requestdto.getSubject());
-        StudentResp.setDeleted(false);
-
-        return StudentResp;
-    }
-
-
-    private Createresponsedto mapToDto(Student student){
-
-
-
-        Createresponsedto createresponsedto = new Createresponsedto();
-
-
-        createresponsedto.setEmail(student.getEmail());
-        createresponsedto.setName(student.getName());
-
-        createresponsedto.setAge(student.getAge());
-        createresponsedto.setSubject(student.getSubject());
-        createresponsedto.setId(student.getId());
-
-        c
-    }
-
-
 }
