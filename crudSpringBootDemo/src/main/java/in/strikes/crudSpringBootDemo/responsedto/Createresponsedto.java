@@ -2,14 +2,19 @@ package in.strikes.crudSpringBootDemo.responsedto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
+
 public class Createresponsedto {
 
 
     private long Id;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime updatedAt;
     private String Name;
     private String Subject;
     private int Rollno;

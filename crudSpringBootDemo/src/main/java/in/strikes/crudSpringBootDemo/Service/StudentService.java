@@ -7,6 +7,7 @@ import in.strikes.crudSpringBootDemo.responsedto.Createresponsedto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,14 +21,14 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Student createStudent( Createrequestdto requestdto) {
-
-//        System.out.println("entering serivce");
-
-        Student student =mapToEntity(requestdto);
+    public Createresponsedto createStudent( Createrequestdto createrequestdto) {
 
 
-//        studentReq.setDeleted(false);
+
+        Student student =mapToEntity(createrequestdto);
+
+
+
         Student StudentResp = studentRepository.save(student);
 
 
@@ -124,6 +125,11 @@ public class StudentService {
         StudentResp.setAge(requestdto.getAge());
         StudentResp.setSubject(requestdto.getSubject());
         StudentResp.setDeleted(false);
+        StudentResp.setEmail(requestdto.getEmail());
+        StudentResp.setRollno(requestdto.getRollno());
+        StudentResp.setCreatedAt(LocalDateTime.now());
+        StudentResp.setUpdatedAt(LocalDateTime.now());
+
 
         return StudentResp;
     }
@@ -142,8 +148,11 @@ public class StudentService {
         createresponsedto.setAge(student.getAge());
         createresponsedto.setSubject(student.getSubject());
         createresponsedto.setId(student.getId());
+        createresponsedto.setCreatedAt(student.getCreatedAt());
+        createresponsedto.setUpdatedAt(student.getUpdatedAt());
 
-        c
+
+        return  createresponsedto;
     }
 
 

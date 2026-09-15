@@ -16,15 +16,15 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    private LocalDateTime craetedAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public LocalDateTime getCraetedAt() {
-        return craetedAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCraetedAt(LocalDateTime craetedAt) {
-        this.craetedAt = craetedAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
