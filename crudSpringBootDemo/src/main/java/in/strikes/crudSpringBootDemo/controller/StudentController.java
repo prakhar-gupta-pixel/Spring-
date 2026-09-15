@@ -3,7 +3,9 @@ package in.strikes.crudSpringBootDemo.controller;
 import in.strikes.crudSpringBootDemo.Service.StudentService;
 import in.strikes.crudSpringBootDemo.entity.Student;
 import in.strikes.crudSpringBootDemo.requestdto.Createrequestdto;
+import in.strikes.crudSpringBootDemo.requestdto.Updatereqdto;
 import in.strikes.crudSpringBootDemo.responsedto.Createresponsedto;
+import in.strikes.crudSpringBootDemo.responsedto.Updateresponsedto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,10 +45,10 @@ public class StudentController {
 
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Student> getStudent( @PathVariable Long id ) {
+    public ResponseEntity<Createresponsedto> getStudent( @PathVariable Long id ) {
 
 
-         Student StudentResponse =studentService.getStudent(id);
+         Createresponsedto StudentResponse =studentService.getStudent(id);
 
 
          if (StudentResponse == null) {
@@ -68,10 +70,10 @@ public class StudentController {
 
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Student>> getAllStudent( ) {
+    public ResponseEntity<List<Createresponsedto>> getAllStudent( ) {
 
 
-        List<Student> StudentResponse = studentService.getAllStudent();
+        List<Createresponsedto> StudentResponse = studentService.getAllStudent();
 
 
         if (StudentResponse == null) {
@@ -88,11 +90,12 @@ public class StudentController {
 
     @PutMapping("/update/{id}")
 
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+    public ResponseEntity<Updateresponsedto> updateStudent(@PathVariable Long id,
+                                                 @RequestBody Updatereqdto studentreq) {
 
 
 
-        Student StudentResponse =studentService.updateStudent(id, student);
+        Updateresponsedto StudentResponse =studentService.updateStudent(id, studentreq);
 
 
         if (StudentResponse == null) {
