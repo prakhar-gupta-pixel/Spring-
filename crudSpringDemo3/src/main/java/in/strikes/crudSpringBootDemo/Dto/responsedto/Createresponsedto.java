@@ -1,4 +1,4 @@
-package in.strikes.crudSpringBootDemo.responsedto;
+package in.strikes.crudSpringBootDemo.Dto.responsedto;
 
 import java.time.LocalDateTime;
 

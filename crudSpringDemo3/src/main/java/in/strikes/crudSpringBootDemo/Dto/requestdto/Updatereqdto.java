@@ -1,4 +1,4 @@
-package in.strikes.crudSpringBootDemo.requestdto;
+package in.strikes.crudSpringBootDemo.Dto.requestdto;
 
 public class Updatereqdto {
 

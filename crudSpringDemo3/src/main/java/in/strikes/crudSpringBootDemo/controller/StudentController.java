@@ -1,11 +1,11 @@
 package in.strikes.crudSpringBootDemo.controller;
 
 import in.strikes.crudSpringBootDemo.Service.StudentService;
-import in.strikes.crudSpringBootDemo.entity.Student;
-import in.strikes.crudSpringBootDemo.requestdto.Createrequestdto;
-import in.strikes.crudSpringBootDemo.requestdto.Updatereqdto;
-import in.strikes.crudSpringBootDemo.responsedto.Createresponsedto;
-import in.strikes.crudSpringBootDemo.responsedto.Updateresponsedto;
+import in.strikes.crudSpringBootDemo.Dto.requestdto.Createrequestdto;
+import in.strikes.crudSpringBootDemo.Dto.requestdto.Updatereqdto;
+import in.strikes.crudSpringBootDemo.Dto.responsedto.Createresponsedto;
+import in.strikes.crudSpringBootDemo.Dto.responsedto.Updateresponsedto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +27,9 @@ public class StudentController {
     }
 
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<Createresponsedto> createStudent(
-            @RequestBody Createrequestdto createrequestdto) {
+             @Valid @RequestBody Createrequestdto createrequestdto) {
 
 
 
@@ -44,7 +44,7 @@ public class StudentController {
 
 
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Createresponsedto> getStudent( @PathVariable Long id ) {
 
 
@@ -69,7 +69,7 @@ public class StudentController {
     }
 
 
-    @GetMapping("/getAll")
+    @GetMapping()
     public ResponseEntity<List<Createresponsedto>> getAllStudent( ) {
 
 

@@ -1,13 +1,22 @@
 package in.strikes.crudSpringBootDemo.Exception;
 
 
+import in.strikes.crudSpringBootDemo.Dto.requestdto.ExceptionResponseDto;
+import in.strikes.crudSpringBootDemo.Dto.requestdto.ValidationExceptionResponseDto;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.weaver.ast.Not;
 import org.hibernate.annotations.NotFound;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -15,25 +24,53 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(DuplicateResourceException.class)
-    public ResponseEntity <String> DuplicateResourceException(DuplicateResourceException e ) {
+    public ResponseEntity <ExceptionResponseDto> DuplicateResourceException(DuplicateResourceException e,    HttpServletRequest request ) {
+
+
+
+        ExceptionResponseDto exceptionResponse = new ExceptionResponseDto(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
 
         return  ResponseEntity.
                 status(HttpStatus.CONFLICT).
-                body(e.getMessage());
+                body(exceptionResponse);
     }
 
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity <String> handleResourceNotFoundException(ResourceNotFoundException e ) {
+    public ResponseEntity <ExceptionResponseDto> handleResourceNotFoundException(ResourceNotFoundException e ,
+    HttpServletRequest request) {
+
+        ExceptionResponseDto exceptionResponse = new ExceptionResponseDto(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
 
         return  ResponseEntity.
                 status(HttpStatus.NOT_FOUND).
-                body(e.getMessage());
+                body(exceptionResponse);
     }
 
      @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity <String> handleRuntimeException( RuntimeException e ) {
+    public ResponseEntity <String> handleRuntimeException( RuntimeException e,   HttpServletRequest request ) {
 
+
+
+         ExceptionResponseDto exceptionResponse = new ExceptionResponseDto(
+                 LocalDateTime.now(),
+                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                 e.getMessage(),
+                 request.getRequestURI()
+         );
          return  ResponseEntity.
                  status(HttpStatus.INTERNAL_SERVER_ERROR).
                  body(e.getMessage());
@@ -43,11 +80,46 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity <String> handleGenericException( Exception e ) {
+    public ResponseEntity <String> handleGenericException( Exception e ,   HttpServletRequest request) {
+
+
+        ExceptionResponseDto exceptionResponse = new ExceptionResponseDto(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
 
         return  ResponseEntity.
                 status(HttpStatus.INTERNAL_SERVER_ERROR).
                 body(e.getMessage());
     }
 
+
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ValidationExceptionResponseDto> handleDMethodArgumentNotValidException(
+            MethodArgumentNotValidException ex, HttpServletRequest request) {
+
+        Map<String, String> fieldErrors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors()
+                .forEach(error ->
+                        fieldErrors.put(error.getField(), error.getDefaultMessage()));
+
+        ValidationExceptionResponseDto exceptionResponse = new ValidationExceptionResponseDto(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "Validation Failed",
+                request.getRequestURI(),
+                fieldErrors
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(exceptionResponse);
+    }
 }

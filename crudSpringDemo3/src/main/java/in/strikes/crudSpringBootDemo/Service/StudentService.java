@@ -3,11 +3,10 @@
     import in.strikes.crudSpringBootDemo.Exception.ResourceNotFoundException;
     import in.strikes.crudSpringBootDemo.entity.Student;
     import in.strikes.crudSpringBootDemo.repository.StudentRepository;
-    import in.strikes.crudSpringBootDemo.requestdto.Createrequestdto;
-    import in.strikes.crudSpringBootDemo.requestdto.Updatereqdto;
-    import in.strikes.crudSpringBootDemo.responsedto.Createresponsedto;
-    import in.strikes.crudSpringBootDemo.responsedto.Updateresponsedto;
-    import org.springframework.http.ResponseEntity;
+    import in.strikes.crudSpringBootDemo.Dto.requestdto.Createrequestdto;
+    import in.strikes.crudSpringBootDemo.Dto.requestdto.Updatereqdto;
+    import in.strikes.crudSpringBootDemo.Dto.responsedto.Createresponsedto;
+    import in.strikes.crudSpringBootDemo.Dto.responsedto.Updateresponsedto;
     import org.springframework.stereotype.Service;
     import org.springframework.web.bind.annotation.RequestParam;
 
