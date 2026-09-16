@@ -6,6 +6,7 @@
     import in.strikes.crudSpringBootDemo.requestdto.Updatereqdto;
     import in.strikes.crudSpringBootDemo.responsedto.Createresponsedto;
     import in.strikes.crudSpringBootDemo.responsedto.Updateresponsedto;
+    import org.springframework.http.ResponseEntity;
     import org.springframework.stereotype.Service;
     import org.springframework.web.bind.annotation.RequestParam;
 
@@ -120,6 +121,25 @@
 
             return true;
         }
+
+        public Createresponsedto restoreSoftly(Long Id) {
+
+           Optional<Student> StudentResponse = studentRepository.findByIdAndDeletedIsTrue(Id);
+
+            if (StudentResponse.isEmpty()) {
+                return null;
+            }
+
+            Student studentResp = StudentResponse.get();
+
+            studentResp.setDeleted(false);
+            studentRepository.save(studentResp);
+
+            return mapToDto(studentResp);
+
+
+        }
+
 
 
 

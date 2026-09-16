@@ -146,4 +146,21 @@ public class StudentController {
     }
 
 
+
+    @PatchMapping("/restore/{id}")
+
+    public ResponseEntity <Createresponsedto> restoreSoftly( @ PathVariable Long id ) {
+
+
+
+            Createresponsedto StudentResponse = studentService.restoreSoftly(id);
+
+
+            if (StudentResponse == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(StudentResponse);
+    }
+
+
 }

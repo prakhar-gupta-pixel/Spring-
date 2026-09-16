@@ -14,6 +14,8 @@ public interface StudentRepository extends JpaRepository<Student, Long > {
 
     List<Student> findByDeletedIsFalse();
 
+    Optional<Student> findByIdAndDeletedIsTrue(Long id);
+
 
 
 
