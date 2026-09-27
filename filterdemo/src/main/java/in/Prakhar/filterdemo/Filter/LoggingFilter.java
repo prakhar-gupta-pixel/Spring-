@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Component
-@Order(2)
+@Order(1)
 
 public class  LoggingFilter implements Filter {
 
@@ -37,6 +37,8 @@ public class  LoggingFilter implements Filter {
 
         resp.setHeader("Request-Id", requestId);
 
+
+
         try {
             chain.doFilter(request, response);
 
@@ -51,6 +53,22 @@ public class  LoggingFilter implements Filter {
 
 
             System.out.println(resp.getStatus());
+
+
+
+
+            String username =
+                    (String) request.getAttribute("username");
+
+            String role =
+                    (String) request.getAttribute("role");
+
+            String authType =
+                    (String) request.getAttribute("authType");
+
+            System.out.println("Username: " + username);
+            System.out.println("Role: " + role);
+            System.out.println("Auth Type: " + authType);
 
             System.out.println("tat IS " +Duration + "ms")
 

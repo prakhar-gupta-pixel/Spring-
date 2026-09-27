@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-@Order(3)
-public class AuthenticationFilter implements Filter {
+@Order(2)
+public class AuthoriseFilter implements Filter {
 
     @Override
     public void doFilter(
@@ -25,31 +25,26 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse resp =
                 (HttpServletResponse) response;
 
-        String apiKey =
-                req.getHeader("x-api-key");
+        String token =
+                req.getHeader("Authorization");
 
-        // No API key → let the next filter decide
-        if (apiKey == null) {
+        // No Bearer token → let the next authentication mechanism try
+        if (token == null) {
             chain.doFilter(request, response);
             return;
         }
 
-        if ("secret6306".equals(apiKey)) {
+        if ("Bearer token-user".equals(token)) {
 
-            request.setAttribute(
-                    "username",
-                    "api-client"
-            );
+            request.setAttribute("username", "prakhar");
+            request.setAttribute("role", "USER");
+            request.setAttribute("authType", "BEARER");
 
-            request.setAttribute(
-                    "role",
-                    "API_CLIENT"
-            );
+        } else if ("Bearer token-admin".equals(token)) {
 
-            request.setAttribute(
-                    "authType",
-                    "API_KEY"
-            );
+            request.setAttribute("username", "admin");
+            request.setAttribute("role", "ADMIN");
+            request.setAttribute("authType", "BEARER");
 
         } else {
 
@@ -58,7 +53,10 @@ public class AuthenticationFilter implements Filter {
             );
 
             resp.getWriter().write(
-                    "Invalid API key"
+
+                    "{\n" +
+                            "    \"message\" : \"invalid or missing api key\"\n" +
+                            "}"
             );
 
             return;

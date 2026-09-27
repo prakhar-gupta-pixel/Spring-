@@ -40,5 +40,9 @@ public class ResponseFilter implements Filter {
         wrappedResponse.getWriter().write(modifiedBody);
 
         wrappedResponse.copyBodyToResponse();
+        response.setContentType("text/html");
+        response.setContentLength(originalBody.length);
+        ((HttpServletResponse) response).setHeader("x-api-version", "1");
+        response.set
     }
 }
