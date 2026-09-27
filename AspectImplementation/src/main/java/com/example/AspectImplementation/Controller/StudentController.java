@@ -5,12 +5,11 @@ package com.example.AspectImplementation.Controller;
     import com.example.AspectImplementation.Service.StudentService;
     import jakarta.servlet.http.HttpServletRequest;
     import org.springframework.http.ResponseEntity;
-    import org.springframework.web.bind.annotation.PostMapping;
-    import org.springframework.web.bind.annotation.RequestBody;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RestController;
+    import org.springframework.web.bind.annotation.*;
 
-    @RestController
+    import java.util.UUID;
+
+@RestController
     @RequestMapping("/api/students")
     public class StudentController {
 
@@ -24,14 +23,24 @@ package com.example.AspectImplementation.Controller;
 
 
         @PostMapping
-        public ResponseEntity<String> createStudent(@RequestBody Student student) {
+        public ResponseEntity<Student> createStudent(@RequestBody Student student) {
 
-            String s = studentService.createStudent();
+            UUID uuid = UUID.randomUUID();
+            Student s = studentService.createStudent(student ,uuid);
 
 
             return ResponseEntity.ok(s);
         }
 
 
+
+    @GetMapping
+    public ResponseEntity<String> dummy()
+    {
+
+
+        String s = "aditya";
+        return ResponseEntity.ok(studentService.dummy(s));
+    }
 
     }
